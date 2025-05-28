@@ -2,54 +2,25 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <title>PCAP Viewer</title>
-  <script src="https://cdn.jsdelivr.net/npm/pcapjs@latest/dist/pcap.min.js"></script>
+  <title>PCAP-Dateien Download</title>
   <style>
-    body { margin: 0; font-family: sans-serif; background: #f9f9f9; color: #333; }
-    #viewer { padding: 1em; }
-    a { display: block; margin: 0.5em 0; color: blue; text-decoration: none; }
+    body { font-family: sans-serif; background: #f5f5f5; color: #333; padding: 2em; }
+    h1 { color: #007acc; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 0.5em 0; }
+    a { text-decoration: none; color: #007acc; font-weight: bold; }
+    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <h1>Interactive PCAP Viewer</h1>
-  <div id="viewer">Lade PCAP…</div>
-
-  <h2>PCAP-Dateien:</h2>
+  <h1>PCAP-Dateien Download</h1>
+  <p>Klicke auf eine Datei, um sie herunterzuladen und in Wireshark zu öffnen:</p>
   <ul>
-    <li><a href="?file=pcaps/Alarame2.pcap">Alarame2.pcap</a></li>
-    <li><a href="?file=pcaps/geschichte.pcap">geschichte.pcap</a></li>
-    <li><a href="?file=pcaps/music.pcap">music.pcap</a></li>
-    <li><a href="?file=pcaps/recherche.pcap">recherche.pcap</a></li>
-    <li><a href="?file=pcaps/Nachrichten2.pcap">Nachrichten2.pcap</a></li>
+    <li><a href="https://raw.githubusercontent.com/tatiana917/meine-pcaps/main/pcaps/Alarame2.pcap" download>Alarame2.pcap</a></li>
+    <li><a href="https://raw.githubusercontent.com/tatiana917/meine-pcaps/main/pcaps/geschichte.pcap" download>geschichte.pcap</a></li>
+    <li><a href="https://raw.githubusercontent.com/tatiana917/meine-pcaps/main/pcaps/music.pcap" download>music.pcap</a></li>
+    <li><a href="https://raw.githubusercontent.com/tatiana917/meine-pcaps/main/pcaps/recherche.pcap" download>recherche.pcap</a></li>
+    <li><a href="https://raw.githubusercontent.com/tatiana917/meine-pcaps/main/pcaps/nachrichten2.pcap" download>nachrichten2.pcap</a></li>
   </ul>
-
-  <script>
-    const rawBase = 'https://raw.githubusercontent.com/tatiana917/meine-pcaps/main/';
-    const params = new URLSearchParams(location.search);
-    const filePath = params.get('file');
-
-    if (!filePath) {
-      document.getElementById('viewer').textContent = 'Bitte eine PCAP-Datei auswählen.';
-    } else {
-      const pcapUrl = rawBase + filePath;
-      document.getElementById('viewer').textContent = 'Lade ' + filePath + '…';
-
-      fetch(pcapUrl)
-        .then(r => {
-          if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
-          return r.arrayBuffer();
-        })
-        .then(buf => {
-          const data = pcap.parse(buf);
-          document.getElementById('viewer').textContent =
-            `✅ ${filePath} geladen: ${data.packets.length} Pakete`;
-          console.log(data);
-        })
-        .catch(err => {
-          document.getElementById('viewer').textContent =
-            '❌ Fehler beim Laden: ' + err;
-        });
-    }
-  </script>
 </body>
 </html>
